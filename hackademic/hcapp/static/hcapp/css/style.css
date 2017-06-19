@@ -1,0 +1,17 @@
+body{
+    background-image: url("../images/gray-to-white.jpg");
+}
+
+ol.my-list-group{
+    margin: 50px;
+    padding: 5px;
+}
+
+li.my-list-group-item{
+    padding: 10px;
+    font-size: 20px;
+}
+
+p.normal{
+    overflow-wrap: break-word;
+}

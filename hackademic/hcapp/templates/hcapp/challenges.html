@@ -1,0 +1,29 @@
+{% extends 'hcapp/base.html' %}
+
+{% block title %}challenges{% endblock %}
+
+{% block list %}
+    <ul class="nav navbar-nav navbar-right">
+        <li class="">
+            <a href="{% url 'hcapp:challenge-create' %}">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Create Challenge</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    {% if all_challenges %}
+
+    <h3 style="margin:20px;">Challenges:</h3>
+        <ol class="my-list-group">
+            {% for challenge in all_challenges %}
+            <li class="my-list-group-item"><a href="{% url 'hcapp:challenge-details' challenge.id %}">{{ challenge.title }}</a></li>
+            {% endfor %}
+        </ol>
+
+    {% else %}
+        <h3>There are no challenges in database</h3>
+    {% endif%}
+
+{% endblock %}

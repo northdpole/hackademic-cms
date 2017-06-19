@@ -1,0 +1,29 @@
+{% extends 'hcapp/base.html' %}
+
+{% block title %}articles{% endblock %}
+
+{% block list %}
+    <ul class="nav navbar-nav navbar-right">
+        <li class="">
+            <a href="{% url 'hcapp:articles-create' %}">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Create Article</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    {% if all_articles %}
+
+    <h3 style="margin:20px;">Articles:</h3>
+        <ol class="my-list-group">
+            {% for article in all_articles %}
+            <li class="my-list-group-item"><a href="{% url 'hcapp:article-details' article.id %}">{{ article.title }}</a></li>
+            {% endfor %}
+        </ol>
+
+    {% else %}
+        <h3>There are no articles in database</h3>
+    {% endif%}
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'hcapp/base.html' %}
+
+{% block title %}challenge details{% endblock %}
+
+{% block body %}
+
+<div style="width: 800px;">
+    <h3>Title:&nbsp{{ db_challenge.title }}</h3>
+    <hr>
+    <h3>Description:</h3>
+    <p class="normal">{{ db_challenge.description }}</p>
+    <hr>
+</div>
+
+{% endblock %}

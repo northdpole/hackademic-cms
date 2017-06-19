@@ -1,0 +1,62 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Load Static Files#}
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'hcapp/css/style.css' %}"/>
+
+<head>
+    <title> {% block title %}Hackademic{% endblock %}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+
+            <!-- Logo -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'hcapp:index' %}">Hackademic</a>
+            </div>
+
+            <!-- Items -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="">
+                        <a href="{% url 'hcapp:articles' %}">
+                            Articles
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'hcapp:challenges' %}">
+                            Challenges
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'hcapp:register' %}">
+                            Users
+                        </a>
+                    </li>
+
+                </ul>
+
+                {% block list %}
+                {% endblock %}
+
+            </div>
+        </div>
+    </nav>
+{% block body %}
+{% endblock %}
+</body>

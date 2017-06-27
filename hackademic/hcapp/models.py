@@ -1,12 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
-
 # Create your models here.
 from django.urls import reverse
 
 
-class db_user(AbstractUser, PermissionsMixin):
+class DbUser(AbstractUser, PermissionsMixin):
     username = models.CharField(max_length=255, null=False, unique=True)
     full_name = models.CharField(max_length=255, null=False)
     email = models.CharField(max_length=100, null=False, unique=True)
@@ -34,11 +33,12 @@ class db_user(AbstractUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-class db_challenge(models.Model):
+
+class DbChallenge(models.Model):
     title = models.CharField(max_length=100, unique=True)
     pkg_name = models.CharField(max_length=100)
     description = models.TextField()
-    author = models.ForeignKey(db_user)
+    author = models.ForeignKey(DbUser)
     category = models.CharField(max_length=100)
     date_posted = models.DateTimeField(auto_now_add=True)
     visibility = models.CharField(max_length=20, default="private")
@@ -58,13 +58,14 @@ class db_challenge(models.Model):
     def __str__(self):
         return self.title
 
-class db_article(models.Model):
+
+class DbArticle(models.Model):
     title = models.CharField(max_length=100, unique=True)
     content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(db_user, related_name='created_by')
+    created_by = models.ForeignKey(DbUser, related_name='created_by')
     last_modified = models.DateTimeField(auto_now=True)
-    last_modified_by = models.ForeignKey(db_user, null=True, related_name='last_modified_by')
+    last_modified_by = models.ForeignKey(DbUser, null=True, related_name='last_modified_by')
     ordering = models.IntegerField(null=True)
     is_published = models.NullBooleanField(null=True)
 

@@ -1,10 +1,9 @@
+from .models import DbUser, DbArticle, DbChallenge
+from .forms import UserForm
+from django.views.generic import View, TemplateView, CreateView
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 from django.views import generic
-
-from hcapp.models import db_user, db_article, db_challenge
-from .forms import UserForm
-from django.views.generic import View, TemplateView, CreateView
 
 
 class IndexView(TemplateView):
@@ -16,15 +15,16 @@ class ArticleView(generic.ListView):
     context_object_name = 'all_articles'
 
     def get_queryset(self):
-        return db_article.objects.all()
+        return DbArticle.objects.all()
 
 
 class ArticleDetail(generic.DetailView):
-    model = db_article
+    model = DbArticle
     template_name = 'hcapp/article-details.html'
 
+
 class ArticleCreation(CreateView):
-    model = db_article
+    model = DbArticle
     fields = ['title', 'content', 'created_by']
     template_name = 'hcapp/article-form.html'
 
@@ -34,16 +34,17 @@ class ChallengeView(generic.ListView):
     context_object_name = 'all_challenges'
 
     def get_queryset(self):
-        return db_challenge.objects.all()
+        return DbChallenge.objects.all()
+
 
 class ChallengeCreation(CreateView):
-    model = db_challenge
+    model = DbChallenge
     fields = ['title', 'pkg_name', 'description', 'author', 'category']
     template_name = 'hcapp/challenge-form.html'
 
 
 class ChallengeDetail(generic.DetailView):
-    model = db_challenge
+    model = DbChallenge
     template_name = 'hcapp/challenge-details.html'
 
 
@@ -51,20 +52,20 @@ class UserView(View):
     form_class = UserForm
     template_name = 'hcapp/register-form.html'
 
-    #display blank form
+    # display blank form
     def get(self, request):
         form = self.form_class(None)
-        return render(request, self.template_name, {'form' : form})
+        return render(request, self.template_name, {'form': form})
 
-    #process form data
+    # process form data
     def post(self, request):
         form = self.form_class(request.POST)
 
         if form.is_valid():
 
-            user = form.save(commit = False)
+            user = form.save(commit=False)
 
-            #normalized data
+            # normalized data
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             email = form.cleaned_data['email']
@@ -72,7 +73,7 @@ class UserView(View):
             user.set_password(password)
             user.save()
 
-            #returns User  objects if credentials are correct
+            # returns User  objects if credentials are correct
 
             user = authenticate(username=username, password=password)
 

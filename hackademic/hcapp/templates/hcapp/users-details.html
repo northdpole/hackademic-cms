@@ -1,0 +1,12 @@
+{% extends 'hcapp/base.html' %}
+
+{% block title %}user details{% endblock %}
+
+{% block body %}
+
+<div style="width: 800px;">
+    <h3>Username:&nbsp{{ DbUser.username }} &nbspEmail:&nbsp{{ DbUser.email }}</h3>
+    <hr>
+</div>
+
+{% endblock %}

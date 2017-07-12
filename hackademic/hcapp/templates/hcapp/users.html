@@ -1,0 +1,34 @@
+{% extends 'hcapp/base.html' %}
+
+{% block title %}users{% endblock %}
+
+{% block list %}
+    <ul class="nav navbar-nav navbar-right">
+        <li class="">
+            <a href="{% url 'hcapp:register' %}">
+                </span>Register</a>
+        </li>
+
+        <li class="">
+            <a href="{% url 'hcapp:login' %}">
+                </span>Login</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    {% if all_users %}
+
+    <h3 style="margin:20px;">Users:</h3>
+        <ol class="my-list-group">
+            {% for user in all_users %}
+            <li class="my-list-group-item"><a href="{% url 'hcapp:users-details' user.slug %}">{{ user.username }}</a></li>
+            {% endfor %}
+        </ol>
+
+    {% else %}
+        <h3>There are no users in database</h3>
+    {% endif%}
+
+{% endblock %}

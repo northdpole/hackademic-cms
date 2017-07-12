@@ -44,11 +44,22 @@
                     </li>
 
                     <li class="">
-                        <a href="{% url 'hcapp:register' %}">
+                        <a href="{% url 'hcapp:users' %}">
                             Users
                         </a>
                     </li>
 
+                    <li class="">
+                        <a href="{% url 'hcapp:menu-manager' %}">
+                            Menu Manager
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'hcapp:options' %}">
+                            Options
+                        </a>
+                    </li>
                 </ul>
 
                 {% block list %}

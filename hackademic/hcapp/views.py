@@ -9,6 +9,11 @@ from django.views import generic
 class IndexView(TemplateView):
     template_name = 'hcapp/index.html'
 
+class MenuView(TemplateView):
+    template_name = 'hcapp/menu-manager.html'
+
+class OptionsView(TemplateView):
+    template_name = 'hcapp/options.html'
 
 class ArticleView(generic.ListView):
     template_name = 'hcapp/articles.html'
@@ -48,7 +53,18 @@ class ChallengeDetail(generic.DetailView):
     template_name = 'hcapp/challenge-details.html'
 
 
-class UserView(View):
+class UserView(generic.ListView):
+    template_name = 'hcapp/users.html'
+    context_object_name = 'all_users'
+
+    def get_queryset(self):
+        return DbUser.objects.all()
+
+class UserDetail(generic.DetailView):
+    model = DbUser
+    template_name = 'hcapp/users-details.html'
+
+class UserCreation(View):
     form_class = UserForm
     template_name = 'hcapp/register-form.html'
 
@@ -82,3 +98,4 @@ class UserView(View):
                 if user.is_active:
                     login(request, user)
                     return redirect('hcapp:index')
+

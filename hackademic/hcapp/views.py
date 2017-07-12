@@ -4,6 +4,8 @@ from django.views.generic import View, TemplateView, CreateView
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 from django.views import generic
+from unidecode import unidecode
+from django.template.defaultfilters import slugify
 
 
 class IndexView(TemplateView):
@@ -33,6 +35,9 @@ class ArticleCreation(CreateView):
     fields = ['title', 'content', 'created_by']
     template_name = 'hcapp/article-form.html'
 
+    def form_valid(self, form):
+        DbArticle.slug = slugify(unidecode(self.title))
+        return super(ArticleCreation, self).form_valid(form)
 
 class ChallengeView(generic.ListView):
     template_name = 'hcapp/challenges.html'
@@ -86,6 +91,7 @@ class UserCreation(View):
             password = form.cleaned_data['password']
             email = form.cleaned_data['email']
             full_name = form.cleaned_data['full_name']
+            user.slug = slugify(unidecode(username))
             user.set_password(password)
             user.save()
 

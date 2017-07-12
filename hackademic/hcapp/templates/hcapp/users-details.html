@@ -5,8 +5,11 @@
 {% block body %}
 
 <div style="width: 800px;">
-    <h3>Username:&nbsp{{ DbUser.username }} &nbspEmail:&nbsp{{ DbUser.email }}</h3>
-    <hr>
+    <ul class="list-group">
+        <li > {{ object.username }} </li>
+        <li > {{ object.email }} </li>
+        <li > {{ object.full_name }} </li>
+    </ul>
 </div>
 
 {% endblock %}

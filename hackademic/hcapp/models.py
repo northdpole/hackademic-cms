@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 import uuid
-from unidecode import unidecode
-from django.template.defaultfilters import slugify
+
 
 # Create your models here.
 from django.urls import reverse
@@ -38,23 +37,18 @@ class DbUser(AbstractUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            # Newly created object, so set slug
-            self.s = slugify(unidecode(self.username))
-
-        super(DbUser, self).save(*args, **kwargs)
-
 class DbClasses(models.Model):
     classId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100, unique=True)
     date_created = models.DateTimeField()
     archive = models.BooleanField(default=0)
+    slug = models.SlugField()
 
 
 class DbChallenge(models.Model):
     challengeId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField()
     pkg_name = models.CharField(max_length=100)
     description = models.TextField()
     author = models.ForeignKey(DbUser)
@@ -80,6 +74,7 @@ class DbChallenge(models.Model):
 class DbArticle(models.Model):
     titleId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField()
     content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(DbUser, related_name='created_by')

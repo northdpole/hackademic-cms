@@ -18,7 +18,7 @@
     <h3 style="margin:20px;">Challenges:</h3>
         <ol class="my-list-group">
             {% for challenge in all_challenges %}
-            <li class="my-list-group-item"><a href="{% url 'hcapp:challenge-details' challenge.id %}">{{ challenge.title }}</a></li>
+            <li class="my-list-group-item"><a href="{% url 'hcapp:challenge-details' challenge.slug %}">{{ challenge.title }}</a></li>
             {% endfor %}
         </ol>
 

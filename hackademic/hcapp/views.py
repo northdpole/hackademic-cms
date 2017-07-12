@@ -36,8 +36,10 @@ class ArticleCreation(CreateView):
     template_name = 'hcapp/article-form.html'
 
     def form_valid(self, form):
-        DbArticle.slug = slugify(unidecode(self.title))
-        return super(ArticleCreation, self).form_valid(form)
+        self.object = form.save(commit=False)
+        self.object.slug = form.cleaned_data['title']
+        self.object.save()
+        return redirect('hcapp:articles')
 
 class ChallengeView(generic.ListView):
     template_name = 'hcapp/challenges.html'
@@ -52,6 +54,11 @@ class ChallengeCreation(CreateView):
     fields = ['title', 'pkg_name', 'description', 'author', 'category']
     template_name = 'hcapp/challenge-form.html'
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.slug = form.cleaned_data['title']
+        self.object.save()
+        return redirect('hcapp:challenges')
 
 class ChallengeDetail(generic.DetailView):
     model = DbChallenge

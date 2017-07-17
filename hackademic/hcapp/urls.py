@@ -13,7 +13,9 @@ urlpatterns = [
     #/hcapp/register/
     url(r'^register$', views.UserCreation.as_view(), name='register'),
     # /hcapp/login/
-    url(r'^login$', auth_views.login, {'template_name': 'hcapp/login.html'}, name='login'),
+    url(r'^login$', views.LoginView.as_view(), name='login'),
+    # /hcapp/logout/
+    url(r'^logout$', views.LogoutView.as_view(), name='logout'),
     #/hcapp/articles/
     url(r'^articles$', views.ArticleView.as_view(), name='articles'),
     # /hcapp/articles/create

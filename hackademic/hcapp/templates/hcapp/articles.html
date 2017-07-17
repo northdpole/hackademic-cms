@@ -16,9 +16,9 @@
     {% if all_articles %}
 
     <h3 style="margin:20px;">Articles:</h3>
-        <ol class="my-list-group">
+        <ol class="list-group">
             {% for article in all_articles %}
-            <li class="my-list-group-item"><a href="{% url 'hcapp:article-details' article.slug %}">{{ article.title }}</a></li>
+            <li class="list-group-item"><a href="{% url 'hcapp:article-details' article.slug %}">{{ article.title }}</a></li>
             {% endfor %}
         </ol>
 

@@ -1,3 +1,4 @@
+import unidecode as unidecode
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 import uuid
@@ -5,6 +6,7 @@ import uuid
 
 # Create your models here.
 from django.urls import reverse
+from django.utils.text import slugify
 
 
 class DbUser(AbstractUser, PermissionsMixin):
@@ -37,12 +39,26 @@ class DbUser(AbstractUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.slug = slugify(unidecode(self.username))
+        super(DbUser, self).save(*args, **kwargs)
+
+
 class DbClasses(models.Model):
     classId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100, unique=True)
     date_created = models.DateTimeField()
     archive = models.BooleanField(default=0)
     slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            def save(self, *args, **kwargs):
+                if not self.pk:
+                    self.slug = slugify(unidecode(self.name))
+                super(DbUser, self).save(*args, **kwargs)
+        super(DbClasses, self).save(*args, **kwargs)
 
 
 class DbChallenge(models.Model):
@@ -71,6 +87,15 @@ class DbChallenge(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            def save(self, *args, **kwargs):
+                if not self.pk:
+                    self.slug = slugify(unidecode(self.title))
+                super(DbUser, self).save(*args, **kwargs)
+        super(DbChallenge, self).save(*args, **kwargs)
+
+
 class DbArticle(models.Model):
     titleId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100, unique=True)
@@ -88,6 +113,15 @@ class DbArticle(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            def save(self, *args, **kwargs):
+                if not self.pk:
+                    self.slug = slugify(unidecode(self.title))
+                super(DbUser, self).save(*args, **kwargs)
+        super(DbArticle, self).save(*args, **kwargs)
+
 
 class DbMenus(models.Model):
     menuId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -168,6 +202,5 @@ class DbMenuItems(models.Model):
     url = models.CharField(max_length=256)
     menu_id = models.ForeignKey(DbMenus)
     label = models.CharField(max_length=50)
-    parent = models.IntegerField() #Cannot understand if this needs to be a foreignkey
+    parent = models.IntegerField() #Not sure if this needs to be a foreignkey
     sort = models.IntegerField()
-

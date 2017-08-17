@@ -1,5 +1,8 @@
 {% extends 'hcapp/base.html' %}
 
+{% load staticfiles %}
+
 {% block body %}
-    <h1>Welcome to Hackademic</h1>
+<link rel="stylesheet" type="text/css" href="{% static 'hcapp/css/style.css' %}"/>
+<h1 class="text-warning" align="center">Welcome to Hackademic</h1>
 {% endblock %}

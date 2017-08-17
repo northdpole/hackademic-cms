@@ -5,10 +5,9 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-{# Load Static Files#}
+{# Load Static Files #}
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'hcapp/css/style.css' %}"/>
 
 <head>
     <title> {% block title %}Hackademic{% endblock %}</title>
@@ -44,15 +43,53 @@
                     </li>
 
                     <li class="">
-                        <a href="{% url 'hcapp:register' %}">
+                        <a href="{% url 'hcapp:users' %}">
                             Users
                         </a>
                     </li>
 
+                    <li class="">
+                        <a href="{% url 'hcapp:menu-manager' %}">
+                            Menu Manager
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'hcapp:options' %}">
+                            Options
+                        </a>
+                    </li>
+                </ul>
+
+                {% if user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="{% url 'hcapp:users-details' user.slug %}">
+                        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> {{ user.get_username }}</a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'hcapp:logout' %}">
+                        </span>Logout</a>
+                    </li>
                 </ul>
 
                 {% block list %}
                 {% endblock %}
+
+                {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="{% url 'hcapp:register' %}">
+                        </span>Register</a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'hcapp:login' %}">
+                        </span>Login</a>
+                    </li>
+                </ul>
+                {% endif %}
 
             </div>
         </div>

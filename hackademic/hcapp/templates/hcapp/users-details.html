@@ -1,0 +1,15 @@
+{% extends 'hcapp/base.html' %}
+
+{% block title %}user details{% endblock %}
+
+{% block body %}
+
+<div style="width: 800px;">
+    <ul class="list-group">
+        <li > {{ object.username }} </li>
+        <li > {{ object.email }} </li>
+        <li > {{ object.full_name }} </li>
+    </ul>
+</div>
+
+{% endblock %}
